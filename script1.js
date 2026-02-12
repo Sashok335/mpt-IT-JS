@@ -27,8 +27,6 @@ function getUsersStatistics(users) {
 
 //Задание 5
 function getAverageAge(users) {
-  if (users.length === 0) return 0;
-  
   const totalAge = users.reduce((sum, user) => sum + user.age, 0);
   return totalAge / users.length;
 }
