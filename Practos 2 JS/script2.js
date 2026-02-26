@@ -1,4 +1,3 @@
-let expenses = [];
 let nextId = 1;
 
 const expenseTracker = {
@@ -27,13 +26,19 @@ const expenseTracker = {
         };
 
         this.expenses.push(expense);
-        alert("Расход добавлен: " + expense.title + " (" + expense.amount + " руб)");
+        
+        const successMsg = "Расход добавлен: " + expense.title + " (" + expense.amount + " руб)";
+        console.log(successMsg);
+        alert(successMsg);
+        
         return true;
     },
 
     printAllExpenses() {
         if (this.expenses.length === 0) {
-            alert("Все расходы:\n\nСписок расходов пуст.");
+            const msg = "Все расходы:\n\nСписок расходов пуст.";
+            console.log(msg);
+            alert(msg);
             return;
         }
         
@@ -41,12 +46,18 @@ const expenseTracker = {
         this.expenses.forEach(e => {
             output += "ID: " + e.id + " | " + e.title + " | " + e.amount + " руб | " + e.category + "\n";
         });
+        
+        console.log(output);
         alert(output);
     },
 
     getTotalAmount() {
         const total = this.expenses.reduce((sum, item) => sum + item.amount, 0);
-        alert("ЧЕК:\n\nВсего операций: " + this.expenses.length + "\nВсего потрачено: " + total + " рублей");
+        const msg = "ЧЕК:\n\nВсего операций: " + this.expenses.length + "\nВсего потрачено: " + total + " рублей";
+        
+        console.log(msg);
+        alert(msg);
+        
         return total;
     },
 
@@ -54,7 +65,9 @@ const expenseTracker = {
         const result = this.expenses.filter(e => e.category.toLowerCase() === category.toLowerCase());
         
         if (result.length === 0) {
-            alert("Категория " + category + ":\n\nРасходов в этой категории не найдено.");
+            const msg = "Категория " + category + ":\n\nРасходов в этой категории не найдено.";
+            console.log(msg);
+            alert(msg);
             return result;
         }
 
@@ -65,7 +78,10 @@ const expenseTracker = {
             total += e.amount;
         });
         output += "\nИтого: " + total + " руб";
+        
+        console.log(output);
         alert(output);
+        
         return result;
     },
 
@@ -78,7 +94,9 @@ const expenseTracker = {
         const found = this.expenses.find(e => e.title.toLowerCase().includes(search.toLowerCase()));
 
         if (found) {
-            alert("НАЙДЕНО:\n\nID: " + found.id + "\nНазвание: " + found.title + "\nСумма: " + found.amount + " руб\nКатегория: " + found.category);
+            const msg = "НАЙДЕНО:\n\nID: " + found.id + "\nНазвание: " + found.title + "\nСумма: " + found.amount + " руб\nКатегория: " + found.category;
+            console.log(msg);
+            alert(msg);
             return found;
         } else {
             const wantToAdd = confirm("Расход " + search + " не найден.\n\nХотите добавить его?");
@@ -97,16 +115,22 @@ const expenseTracker = {
         const initialLength = this.expenses.length;
         this.expenses = this.expenses.filter(e => e.id !== id);
 
+        let msg = "";
         if (this.expenses.length < initialLength) {
-            alert("Расход с ID " + id + " удален.");
+            msg = "Расход с ID " + id + " удален.";
         } else {
-            alert("Расход с ID " + id + " не найден.");
+            msg = "Расход с ID " + id + " не найден.";
         }
+        
+        console.log(msg);
+        alert(msg);
     },
 
     printCategoryStats() {
         if (this.expenses.length === 0) {
-            alert("СТАТИСТИКА:\n\nНет данных для статистики.");
+            const msg = "СТАТИСТИКА:\n\nНет данных для статистики.";
+            console.log(msg);
+            alert(msg);
             return;
         }
 
@@ -123,17 +147,9 @@ const expenseTracker = {
         for (const [cat, data] of Object.entries(stats)) {
             output += cat + ": " + data.count + " оп., сумма: " + data.total + " руб.\n";
         }
+        
+        console.log(output);
         alert(output);
-    },
-
-    nextExpense() {
-        if (this.expenses.length === 0) {
-            alert("Нет расходов для переключения.");
-            return;
-        }
-        const randomIndex = Math.floor(Math.random() * this.expenses.length);
-        const e = this.expenses[randomIndex];
-        alert("Случайный расход:\n\n" + e.title + " (" + e.amount + " руб)");
     }
 };
 
@@ -147,7 +163,6 @@ function showMenu() {
         "5. Поиск расхода\n" +
         "6. Статистика по категориям\n" +
         "7. Удалить расход по ID\n" +
-        "8. Случайный расход\n" +
         "0. Выход\n\n" +
         "Выберите действие (0-8):"
     );
@@ -201,12 +216,8 @@ function handleMenuInput(choice) {
             }
             showMenu();
             break;
-        case '8':
-            expenseTracker.nextExpense();
-            showMenu();
-            break;
         case '0':
-            alert("До свидания!");
+            alert("Ну да конец, наконец");
             break;
         default:
             alert("Неверная команда. Попробуйте снова.");
@@ -214,5 +225,4 @@ function handleMenuInput(choice) {
     }
 }
 
-alert("Персональный трекер расходов запущен!");
 showMenu();
